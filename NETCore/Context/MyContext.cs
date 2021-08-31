@@ -12,6 +12,17 @@ namespace NETCore.Context
 
         public DbSet<Person> Persons { get; set; }
 
+        public DbSet<Account> Accounts { get; set; }
+
+        public DbSet<Education> Educations { get; set; }
+
+        public DbSet<Profiling> Profilings { get; set; }
+
+        public DbSet<University> Universities { get; set; }
+
+        // public DbSet<PersonVM> PersonVMs { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
