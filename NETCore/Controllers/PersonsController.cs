@@ -2,7 +2,6 @@
 using NETCore.Base;
 using NETCore.Models;
 using NETCore.Repository.Data;
-using NETCore.ViewModel;
 using System;
 using System.Net;
 
@@ -39,31 +38,23 @@ namespace NETCore.Controllers
             });
         }
 
-
-
-        [HttpPost("getperson")]
-        public ActionResult Register(PersonVM personVM)
+        [HttpGet("getperson/{NIK}")]
+        public ActionResult GetPerson(string NIK)
         {
-            try
+            var data = repository.GetPersonVMById(NIK);
+            if (data == null)
             {
-                repository.Register(personVM);
-                return StatusCode((int)HttpStatusCode.Created, new
+                return StatusCode((int)HttpStatusCode.NoContent, new
                 {
-                    status = HttpStatusCode.Created,
-                    result = personVM,
-                    message = "Data Sukses Dimasukan"
+                    status = HttpStatusCode.NoContent,
+                    result = data
                 });
             }
-            catch (Exception)
+            return StatusCode((int)HttpStatusCode.OK, new
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new
-                {
-                    status = HttpStatusCode.InternalServerError,
-                    message = "Data Gagal Dimasukan"
-                });
-            }
+                status = HttpStatusCode.OK,
+                result = data
+            });
         }
-
-
     }
 }
