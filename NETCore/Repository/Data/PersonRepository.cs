@@ -33,12 +33,12 @@ namespace NETCore.Repository.Data
                                     FullName = $"{p.FirstName} {p.LastName}",
                                     Phone = p.Phone,
                                     BirthDate = p.BirthDate,
-                                    Gender = (int)p.gender,
+                                    Gender = (int)p.gender == 0 ? "laki-laki" : "perempuan",
                                     Salary = p.Salary,
                                     Email = p.Email,
                                     Degree = e.Degree,
                                     GPA = e.GPA,
-                                    UniversityId = u.UniversityId
+                                    UniversityName = u.Name
                                 }).ToList();
             return getPersonVMs;
         }
@@ -61,12 +61,12 @@ namespace NETCore.Repository.Data
                                     FullName = $"{p.FirstName} {p.LastName}",
                                     Phone = p.Phone,
                                     BirthDate = p.BirthDate,
-                                    Gender = (int)p.gender,
+                                    Gender = (int)p.gender == 0 ? "laki-laki" : "perempuan",
                                     Salary = p.Salary,
                                     Email = p.Email,
                                     Degree = e.Degree,
                                     GPA = e.GPA,
-                                    UniversityId = u.UniversityId
+                                    UniversityName = u.Name
                                 }).ToList();
             return getPersonVMs.FirstOrDefault(x => x.NIK == NIK); 
         }

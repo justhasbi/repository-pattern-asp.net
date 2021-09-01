@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NETCore.Base;
+using NETCore.Context;
 using NETCore.Models;
 using NETCore.Repository.Data;
 using NETCore.ViewModel;
@@ -19,32 +20,61 @@ namespace NETCore.Controllers
     {
 
         private readonly AccountRepository repository;
-        public AccountsController(AccountRepository repository) : base(repository)
+        private readonly MyContext myContext;
+
+        public AccountsController(AccountRepository repository, MyContext myContext) : base(repository)
         {
             this.repository = repository;
+            this.myContext = myContext;
         }
 
         [HttpPost("register")]
-        public ActionResult Register(RegisterVM personVM)
+        public ActionResult Register(RegisterVM registerVM)
         {
-            var registerResponse = repository.Register(personVM);
-            if (registerResponse > 0)
+            var checkEmail = myContext.Persons.Where(x => x.Email.Equals(registerVM.Email));
+            var checkNIK = myContext.Persons.Where(x => x.NIK.Equals(registerVM.NIK));
+            var checkPhone = myContext.Persons.Where(x => x.Phone.Equals(registerVM.Phone));
+
+            if(checkEmail.Count() == 0 && checkNIK.Count() == 0 && checkPhone.Count() == 0)
             {
+                var registerResponse = repository.Register(registerVM);
                 return StatusCode((int)HttpStatusCode.Created, new
                 {
                     status = HttpStatusCode.Created,
-                    result = personVM,
+                    result = registerVM,
                     message = "Data Sukses Dimasukan"
                 });
-            }
-            else
+            } 
+            else if (checkNIK.Count() > 0)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, new
                 {
                     status = HttpStatusCode.InternalServerError,
-                    message = "Data Gagal Dimasukan"
+                    message = "NIK Sudah Digunakan"
                 });
             }
+            else if (checkEmail.Count() > 0)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new
+                {
+                    status = HttpStatusCode.InternalServerError,
+                    message = "Email Sudah Digunakan"
+                });
+            }
+            else if (checkPhone.Count() > 0)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new
+                {
+                    status = HttpStatusCode.InternalServerError,
+                    message = "Nomor Telepon Sudah Digunakan"
+                });
+            }
+            return StatusCode((int)HttpStatusCode.InternalServerError, new
+            {
+                status = HttpStatusCode.InternalServerError,
+                message = "Data Gagal Dimasukan"
+            });
+
         }
 
         [HttpPost("login")]
@@ -86,5 +116,17 @@ namespace NETCore.Controllers
                 });
             }
         }
+
+        [HttpPost("forgotpassword")]
+        public ActionResult ForgotPassword(ForgotPasswordVM forgotPasswordVM)
+        {
+            repository.ForgotPassword(forgotPasswordVM);
+            return StatusCode((int)HttpStatusCode.Created, new
+            {
+                status = HttpStatusCode.OK,
+                message = "Success"
+            });
+        }
+
     }
 }

@@ -5,6 +5,8 @@ using NETCore.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace NETCore.Repository.Data
@@ -18,57 +20,50 @@ namespace NETCore.Repository.Data
             this.myContext = myContext;
         }
 
-        public int Register(RegisterVM getPersonVM)
+        public int Register(RegisterVM registerVM)
         {
-            var checkEmail = myContext.Persons.Where(x => x.Email.Equals(getPersonVM.Email));
-            var checkNIK = myContext.Persons.Where(x => x.NIK.Equals(getPersonVM.NIK));
-            var checkPhone = myContext.Persons.Where(x => x.Phone.Equals(getPersonVM.Phone));
-            
-            if(checkEmail.Count() == 0 && checkNIK.Count() == 0 && checkPhone.Count() == 0)
+            // var hashedPassword = "";
+
+            var person = new Person()
             {
-                var person = new Person()
-                {
-                    NIK = getPersonVM.NIK,
-                    FirstName = getPersonVM.FirstName,
-                    LastName = getPersonVM.LastName,
-                    Email = getPersonVM.Email,
-                    Phone = getPersonVM.Phone,
-                    BirthDate = getPersonVM.BirthDate,
-                    gender = (Person.Gender)getPersonVM.Gender,
-                    Salary = getPersonVM.Salary
-                };
-                var insert = myContext.SaveChanges();
-                myContext.Persons.Add(person);
+                NIK = registerVM.NIK,
+                FirstName = registerVM.FirstName,
+                LastName = registerVM.LastName,
+                Email = registerVM.Email,
+                Phone = registerVM.Phone,
+                BirthDate = registerVM.BirthDate,
+                gender = (Person.Gender)registerVM.Gender,
+                Salary = registerVM.Salary
+            };
+            var insert = myContext.SaveChanges();
+            myContext.Persons.Add(person);
 
-                var account = new Account()
-                {
-                    NIK = getPersonVM.NIK,
-                    Password = getPersonVM.Password
-                };
-                myContext.Accounts.Add(account);
-                insert = myContext.SaveChanges();
+            var account = new Account()
+            {
+                NIK = registerVM.NIK,
+                Password = registerVM.Password
+            };
+            myContext.Accounts.Add(account);
+            insert = myContext.SaveChanges();
 
-                var education = new Education()
-                {
-                    Degree = getPersonVM.Degree,
-                    GPA = getPersonVM.GPA,
-                    UniversityId = getPersonVM.UniversityId
-                };
+            var education = new Education()
+            {
+                Degree = registerVM.Degree,
+                GPA = registerVM.GPA,
+                UniversityId = registerVM.UniversityId
+            };
 
-                myContext.Educations.Add(education);
-                insert = myContext.SaveChanges();
-                var profiling = new Profiling()
-                {
-                    NIK = getPersonVM.NIK,
-                    EducationId = education.EducationId
-                };
-                myContext.Profilings.Add(profiling);
-                insert = myContext.SaveChanges();
+            myContext.Educations.Add(education);
+            insert = myContext.SaveChanges();
+            var profiling = new Profiling()
+            {
+                NIK = registerVM.NIK,
+                EducationId = education.EducationId
+            };
+            myContext.Profilings.Add(profiling);
+            insert = myContext.SaveChanges();
 
-                return insert;
-            }
-            return 0;
-            
+            return insert;
         }
 
         public int Login(LoginVM loginVM)
@@ -92,6 +87,47 @@ namespace NETCore.Repository.Data
             {
                 return 3;
             }
+        }
+
+        // forgot password -> reset password
+        public void ForgotPassword(ForgotPasswordVM forgotPasswordVM)
+        {
+            var emailCheck = myContext.Persons.Where(x
+                => x.Email.Equals(forgotPasswordVM.Email)).FirstOrDefault();
+
+            //if email exist
+            if (emailCheck != null)
+            {
+                // generate uid
+                string guid = Guid.NewGuid().ToString();
+                string stringHtmlMessage = $"Password Baru Anda: {guid}";
+
+                // update database
+                var checkEmail = myContext.Accounts.Where(e => e.NIK == emailCheck.NIK).FirstOrDefault();
+                checkEmail.Password = guid;
+                Update(checkEmail);
+
+                Email(stringHtmlMessage, forgotPasswordVM.Email);
+            }
+        }
+
+
+        public static void Email(string stringHtmlMessage, string destinationEmail)
+        {
+            MailMessage message = new MailMessage();
+            SmtpClient smtpClient = new SmtpClient();
+            message.From = new MailAddress("justhasbi7699@gmail.com");
+            message.To.Add(new MailAddress(destinationEmail));
+            message.Subject = "Reset Password";
+            message.IsBodyHtml = true;
+            message.Body = stringHtmlMessage;
+            smtpClient.Port = 587;
+            smtpClient.Host = "smtp.gmail.com"; //for gmail host  
+            smtpClient.EnableSsl = true;
+            smtpClient.UseDefaultCredentials = false;
+            smtpClient.Credentials = new NetworkCredential("justhasbi7699@gmail.com", "tanpabatas123");
+            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtpClient.Send(message);
         }
     }
 }

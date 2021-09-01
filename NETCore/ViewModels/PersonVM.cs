@@ -15,7 +15,7 @@ namespace NETCore.ViewModels
 
         public DateTime BirthDate { get; set; }
 
-        public int Gender { get; set; }
+        public string Gender { get; set; }
 
         public int Salary { get; set; }
 
@@ -25,6 +25,6 @@ namespace NETCore.ViewModels
 
         public string GPA { get; set; }
 
-        public int UniversityId { get; set; }
+        public string UniversityName { get; set; }
     }
 }

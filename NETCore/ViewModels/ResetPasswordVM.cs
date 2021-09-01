@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace NETCore.ViewModels
 {
-    public class ForgotPasswordVM
+    public class ResetPasswordVM
     {
+        public string NewPassword { get; set; }
 
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Compare("NewPassword")]
+        public string ConfirmPassword { get; set; }
     }
 }
