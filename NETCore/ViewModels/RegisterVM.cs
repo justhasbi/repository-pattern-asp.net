@@ -22,6 +22,7 @@ namespace NETCore.ViewModel
         public string LastName { get; set; }
 
         [Required]
+        [DataType(DataType.DateTime)]
         public DateTime BirthDate { get; set; }
 
         [Required]
@@ -35,6 +36,7 @@ namespace NETCore.ViewModel
         public string Email { get; set; }
 
         [Required]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Required]

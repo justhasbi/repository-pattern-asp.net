@@ -66,7 +66,6 @@ namespace NETCore.Repository.Data
 
         public int Login(LoginVM loginVM)
         {
-
             var emailCheck = myContext.Persons.Where(x => x.Email.Equals(loginVM.Email)).FirstOrDefault();
             
             if (emailCheck == null)
@@ -149,7 +148,8 @@ namespace NETCore.Repository.Data
             {
                 var passwordCheck = myContext.Accounts.Where(x => emailCheck.NIK.Equals(x.NIK)).FirstOrDefault();
                 var validatePassword = Hashing.ValidatePassword(resetPasswordVM.CurrentPassword, passwordCheck.Password);
-
+                if (emailCheck != null)
+                {
                     if (validatePassword == false)
                     {
                         // password lama salah
@@ -163,7 +163,9 @@ namespace NETCore.Repository.Data
                         Update(account);
                         return 2;
                     }
-                
+                }
+                // email belum terdaftar
+                return 0;
             }
         }
     }

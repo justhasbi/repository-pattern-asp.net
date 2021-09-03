@@ -16,6 +16,7 @@ namespace NETCore.Models
         public string LastName { get; set; }
         
         [Phone]
+        [Required]
         public string Phone { get; set; }
         
         public DateTime BirthDate { get; set; }
