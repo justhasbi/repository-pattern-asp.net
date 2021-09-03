@@ -151,7 +151,6 @@ C:\Users\Hasbi Shuhada\Desktop\NETCore\NETCore\NETCore\bin\Debug\netcoreapp3.1\S
 C:\Users\Hasbi Shuhada\Desktop\NETCore\NETCore\NETCore\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\Hasbi Shuhada\Desktop\NETCore\NETCore\NETCore\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\Hasbi Shuhada\Desktop\NETCore\NETCore\NETCore\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
-C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\NETCore\obj\Debug\netcoreapp3.1\NETCore.csproj.AssemblyReference.cache
 C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\NETCore\obj\Debug\netcoreapp3.1\NETCore.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\NETCore\obj\Debug\netcoreapp3.1\NETCore.AssemblyInfoInputs.cache
 C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\NETCore\obj\Debug\netcoreapp3.1\NETCore.AssemblyInfo.cs
@@ -304,3 +303,5 @@ C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\NETCore\obj\D
 C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\NETCore\obj\Debug\netcoreapp3.1\NETCore.dll
 C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\NETCore\obj\Debug\netcoreapp3.1\NETCore.pdb
 C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\NETCore\obj\Debug\netcoreapp3.1\NETCore.genruntimeconfig.cache
+C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\NETCore\bin\Debug\netcoreapp3.1\BCrypt.Net-Core.dll
+C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\NETCore\obj\Debug\netcoreapp3.1\NETCore.csproj.AssemblyReference.cache

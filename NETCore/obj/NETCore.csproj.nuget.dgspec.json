@@ -40,6 +40,10 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "BCrypt.Net-Core": {
+              "target": "Package",
+              "version": "[1.6.0, )"
+            },
             "EntityFramework": {
               "target": "Package",
               "version": "[6.4.4, )"

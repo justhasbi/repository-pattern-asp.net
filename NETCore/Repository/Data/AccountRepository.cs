@@ -1,13 +1,12 @@
 ﻿using NETCore.Context;
+using NETCore.Helper;
 using NETCore.Models;
 using NETCore.ViewModel;
 using NETCore.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Threading.Tasks;
 
 namespace NETCore.Repository.Data
 {
@@ -22,7 +21,7 @@ namespace NETCore.Repository.Data
 
         public int Register(RegisterVM registerVM)
         {
-            // var hashedPassword = "";
+            var hashPassword = Hashing.HashPassword(registerVM.Password);
 
             var person = new Person()
             {
@@ -41,7 +40,7 @@ namespace NETCore.Repository.Data
             var account = new Account()
             {
                 NIK = registerVM.NIK,
-                Password = registerVM.Password
+                Password = hashPassword
             };
             myContext.Accounts.Add(account);
             insert = myContext.SaveChanges();
@@ -52,9 +51,9 @@ namespace NETCore.Repository.Data
                 GPA = registerVM.GPA,
                 UniversityId = registerVM.UniversityId
             };
-
             myContext.Educations.Add(education);
             insert = myContext.SaveChanges();
+
             var profiling = new Profiling()
             {
                 NIK = registerVM.NIK,
@@ -62,49 +61,56 @@ namespace NETCore.Repository.Data
             };
             myContext.Profilings.Add(profiling);
             insert = myContext.SaveChanges();
-
             return insert;
         }
 
         public int Login(LoginVM loginVM)
         {
-            var emailCheck = myContext.Persons.Where(x => x.Email.Equals(loginVM.Email));
-            var passwordCheck = myContext.Accounts.Where(x => x.Password.Equals(loginVM.Password));
 
-            if (passwordCheck.Count() == 0 && emailCheck.Count() == 0)
+            var emailCheck = myContext.Persons.Where(x => x.Email.Equals(loginVM.Email)).FirstOrDefault();
+            
+            if (emailCheck == null)
             {
                 return 0;
-            }
-            else if (passwordCheck.Count() == 0)
-            {
-                return 1;
-            }
-            else if (emailCheck.Count() == 0)
-            {
-                return 2;
-            }
+            } 
             else
             {
-                return 3;
+                var passwordCheck = myContext.Accounts.Where(x => emailCheck.NIK.Equals(x.NIK)).FirstOrDefault();
+                
+                var validatePassword = Hashing.ValidatePassword(loginVM.Password, passwordCheck.Password);
+                if(emailCheck != null)
+                {
+                    if (validatePassword == false)
+                    {
+
+                        return 1;
+                    }
+                    else
+                    {
+                        return 2;
+                    }
+                }
+                return 0;
             }
         }
 
         // forgot password -> reset password
         public void ForgotPassword(ForgotPasswordVM forgotPasswordVM)
         {
-            var emailCheck = myContext.Persons.Where(x
-                => x.Email.Equals(forgotPasswordVM.Email)).FirstOrDefault();
+            var emailCheck = myContext.Persons.Where(x => x.Email.Equals(forgotPasswordVM.Email)).FirstOrDefault();
 
             //if email exist
             if (emailCheck != null)
             {
                 // generate uid
                 string guid = Guid.NewGuid().ToString();
-                string stringHtmlMessage = $"Password Baru Anda: {guid}";
-
+                DateTime dateTime = DateTime.Now;
+                string dateSend = dateTime.ToString("g");
+                string stringHtmlMessage = $"Password diubah pada: {dateSend}\nPassword Baru Anda: {guid}";
+                string hashPassword = Hashing.HashPassword(guid);
                 // update database
                 var checkEmail = myContext.Accounts.Where(e => e.NIK == emailCheck.NIK).FirstOrDefault();
-                checkEmail.Password = guid;
+                checkEmail.Password = hashPassword;
                 Update(checkEmail);
 
                 Email(stringHtmlMessage, forgotPasswordVM.Email);
@@ -112,11 +118,11 @@ namespace NETCore.Repository.Data
         }
 
 
-        public static void Email(string stringHtmlMessage, string destinationEmail)
+        public void Email(string stringHtmlMessage, string destinationEmail)
         {
             MailMessage message = new MailMessage();
             SmtpClient smtpClient = new SmtpClient();
-            message.From = new MailAddress("justhasbi7699@gmail.com");
+            message.From = new MailAddress("**");
             message.To.Add(new MailAddress(destinationEmail));
             message.Subject = "Reset Password";
             message.IsBodyHtml = true;
@@ -125,9 +131,40 @@ namespace NETCore.Repository.Data
             smtpClient.Host = "smtp.gmail.com"; //for gmail host  
             smtpClient.EnableSsl = true;
             smtpClient.UseDefaultCredentials = false;
-            smtpClient.Credentials = new NetworkCredential("**", "***");
+            smtpClient.Credentials = new NetworkCredential("**", "**");
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtpClient.Send(message);
+        }
+
+        public int ChangePassword(ChangePasswordVM resetPasswordVM)
+        {
+            var emailCheck = myContext.Persons.Where(x => x.Email.Equals(resetPasswordVM.Email)).FirstOrDefault();
+
+            if (emailCheck == null)
+            {
+                // email belum terdaftar
+                return 0;
+            }
+            else
+            {
+                var passwordCheck = myContext.Accounts.Where(x => emailCheck.NIK.Equals(x.NIK)).FirstOrDefault();
+                var validatePassword = Hashing.ValidatePassword(resetPasswordVM.CurrentPassword, passwordCheck.Password);
+
+                    if (validatePassword == false)
+                    {
+                        // password lama salah
+                        return 1;
+                    }
+                    else
+                    {
+                        // sukses update password
+                        var account = myContext.Accounts.Where(x => emailCheck.NIK.Equals(x.NIK)).FirstOrDefault();
+                        passwordCheck.Password = Hashing.HashPassword(resetPasswordVM.ConfirmPassword);
+                        Update(account);
+                        return 2;
+                    }
+                
+            }
         }
     }
 }

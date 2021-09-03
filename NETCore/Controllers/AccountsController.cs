@@ -31,21 +31,21 @@ namespace NETCore.Controllers
         [HttpPost("register")]
         public ActionResult Register(RegisterVM registerVM)
         {
-            var checkEmail = myContext.Persons.Where(x => x.Email.Equals(registerVM.Email));
-            var checkNIK = myContext.Persons.Where(x => x.NIK.Equals(registerVM.NIK));
-            var checkPhone = myContext.Persons.Where(x => x.Phone.Equals(registerVM.Phone));
+            var checkEmail = myContext.Persons.Where(x => x.Email.Equals(registerVM.Email)).FirstOrDefault();
+            var checkNIK = myContext.Persons.Where(x => x.NIK.Equals(registerVM.NIK)).FirstOrDefault();
+            var checkPhone = myContext.Persons.Where(x => x.Phone.Equals(registerVM.Phone)).FirstOrDefault();
 
-            if(checkEmail.Count() == 0 && checkNIK.Count() == 0 && checkPhone.Count() == 0)
+            if(checkEmail == null && checkNIK == null && checkPhone == null)
             {
                 var registerResponse = repository.Register(registerVM);
                 return StatusCode((int)HttpStatusCode.Created, new
                 {
                     status = HttpStatusCode.Created,
                     result = registerVM,
-                    message = "Data Sukses Dimasukan"
+                    message = "Data Sukses Ditambahkan"
                 });
             } 
-            else if (checkNIK.Count() > 0)
+            else if (checkNIK != null)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, new
                 {
@@ -53,7 +53,7 @@ namespace NETCore.Controllers
                     message = "NIK Sudah Digunakan"
                 });
             }
-            else if (checkEmail.Count() > 0)
+            else if (checkEmail != null)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, new
                 {
@@ -61,7 +61,7 @@ namespace NETCore.Controllers
                     message = "Email Sudah Digunakan"
                 });
             }
-            else if (checkPhone.Count() > 0)
+            else if (checkPhone != null)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, new
                 {
@@ -82,13 +82,13 @@ namespace NETCore.Controllers
         {
             var loginAction = repository.Login(loginVM);
 
+
             if (loginAction == 0)
             {
-
                 return StatusCode((int)HttpStatusCode.BadRequest, new
                 {
                     status = HttpStatusCode.BadRequest,
-                    message = "Email dan Password tidak cocok dengan database"
+                    message = "Email Salah"
                 });
             }
             else if (loginAction == 1)
@@ -97,14 +97,6 @@ namespace NETCore.Controllers
                 {
                     status = HttpStatusCode.BadRequest,
                     message = "Password salah"
-                });
-            }
-            else if (loginAction == 2)
-            {
-                return StatusCode((int)HttpStatusCode.BadRequest, new
-                {
-                    status = HttpStatusCode.BadRequest,
-                    message = "Email Salah"
                 });
             }
             else
@@ -117,7 +109,7 @@ namespace NETCore.Controllers
             }
         }
 
-        [HttpPost("forgotpassword")]
+        [HttpPut("forgotPassword")]
         public ActionResult ForgotPassword(ForgotPasswordVM forgotPasswordVM)
         {
             repository.ForgotPassword(forgotPasswordVM);
@@ -126,6 +118,38 @@ namespace NETCore.Controllers
                 status = HttpStatusCode.OK,
                 message = "Success"
             });
+        }
+
+
+        [HttpPut("changePassword")]
+        public ActionResult ChangePassword(ChangePasswordVM changePasswordVM)
+        {
+            var changePassAction = repository.ChangePassword(changePasswordVM);
+
+            if (changePassAction == 0)
+            {
+                return StatusCode((int)HttpStatusCode.BadRequest, new
+                {
+                    status = HttpStatusCode.BadRequest,
+                    message = "Email Salah"
+                });
+            }
+            else if (changePassAction == 1)
+            {
+                return StatusCode((int)HttpStatusCode.BadRequest, new
+                {
+                    status = HttpStatusCode.BadRequest,
+                    message = "Password Lama Salah"
+                });
+            }
+            else
+            {
+                return StatusCode((int)HttpStatusCode.Created, new
+                {
+                    status = HttpStatusCode.OK,
+                    message = "Sukses Ubah Password"
+                });
+            }
         }
 
     }
