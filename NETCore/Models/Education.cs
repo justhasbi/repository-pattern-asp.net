@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace NETCore.Models
 {
+    [Table("tb_m_education")]
     public class Education
     {
         [Key]

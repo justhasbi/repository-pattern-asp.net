@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace NETCore.Models
 {
+    [Table("tb_tr_profiling")]
     public class Profiling
     {
         [Key]

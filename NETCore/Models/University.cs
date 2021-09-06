@@ -1,9 +1,11 @@
 ﻿
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NETCore.Models
 {
+    [Table("tb_m_university")]
     public class University
     {
         public int UniversityId { get; set; }

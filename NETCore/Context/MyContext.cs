@@ -20,8 +20,9 @@ namespace NETCore.Context
 
         public DbSet<University> Universities { get; set; }
 
-        // public DbSet<PersonVM> PersonVMs { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
+        public DbSet<AccountRole> AccountRoles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -46,6 +47,16 @@ namespace NETCore.Context
             modelBuilder.Entity<Education>()
                 .HasOne(u => u.University)
                 .WithMany(e => e.Educations);
+
+            // one to many between account with account role
+            modelBuilder.Entity<AccountRole>()
+                .HasOne(a => a.Account)
+                .WithMany(ar => ar.AccountRoles);
+
+            // one to many between role with account role 
+            modelBuilder.Entity<AccountRole>()
+                .HasOne(r => r.Role)
+                .WithMany(ar => ar.AccountRoles);
         }
     }
 }

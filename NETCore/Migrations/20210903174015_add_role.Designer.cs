@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NETCore.Context;
 
 namespace NETCore.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20210903174015_add_role")]
+    partial class add_role
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,7 +57,7 @@ namespace NETCore.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("tb_tr_account_role");
+                    b.ToTable("AccountRole");
                 });
 
             modelBuilder.Entity("NETCore.Models.Education", b =>
@@ -146,7 +148,7 @@ namespace NETCore.Migrations
 
                     b.HasKey("RoleId");
 
-                    b.ToTable("tb_m_role");
+                    b.ToTable("Role");
                 });
 
             modelBuilder.Entity("NETCore.Models.University", b =>

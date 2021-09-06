@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace NETCore.Models
 {
+    [Table("tb_m_account")]
     public class Account
     {
         [Key]
@@ -24,5 +25,8 @@ namespace NETCore.Models
         // one to one with profiling
         [JsonIgnore]
         public virtual Profiling Profiling { get; set; }
+
+        // one to many with account roles
+        public virtual ICollection<AccountRole> AccountRoles { get; set; }
     }
 }

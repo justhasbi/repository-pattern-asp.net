@@ -33,6 +33,7 @@ namespace NETCore
             services.AddScoped<ProfilingRepository>();
             services.AddScoped<EducationRepository>();
             services.AddScoped<UniversityRepository>();
+            services.AddScoped<RoleRepository>();
             // services.AddDbContext<MyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("NETCoreContext")));
             
             services.AddDbContext<MyContext>(options => 

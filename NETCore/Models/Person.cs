@@ -1,9 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NETCore.Models
 {
+    [Table("tb_m_person")]
     public class Person
     {
         [Key]
