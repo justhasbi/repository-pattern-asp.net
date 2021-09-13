@@ -83,30 +83,36 @@ namespace NETCore.Controllers
             var loginAction = repository.Login(loginVM);
 
 
-            if (loginAction == 0)
+            //if (loginAction == 0)
+            //{
+            //    return StatusCode((int)HttpStatusCode.BadRequest, new
+            //    {
+            //        status = HttpStatusCode.BadRequest,
+            //        message = "Email Salah"
+            //    });
+            //}
+            //else if (loginAction == 1)
+            //{
+            //    return StatusCode((int)HttpStatusCode.BadRequest, new
+            //    {
+            //        status = HttpStatusCode.BadRequest,
+            //        message = "Password salah"
+            //    });
+            //}
+            //else
+            //{
+            //    return StatusCode((int)HttpStatusCode.Created, new
+            //    {
+            //        status = HttpStatusCode.OK,
+            //        message = "Login Sukses"
+            //    });
+            //}
+
+            return StatusCode((int)HttpStatusCode.Created, new
             {
-                return StatusCode((int)HttpStatusCode.BadRequest, new
-                {
-                    status = HttpStatusCode.BadRequest,
-                    message = "Email Salah"
-                });
-            }
-            else if (loginAction == 1)
-            {
-                return StatusCode((int)HttpStatusCode.BadRequest, new
-                {
-                    status = HttpStatusCode.BadRequest,
-                    message = "Password salah"
-                });
-            }
-            else
-            {
-                return StatusCode((int)HttpStatusCode.Created, new
-                {
-                    status = HttpStatusCode.OK,
-                    message = "Login Sukses"
-                });
-            }
+                status = HttpStatusCode.OK,
+                result = loginAction
+            });
         }
 
         [HttpPut("forgotPassword")]

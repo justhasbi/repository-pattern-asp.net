@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace NETCore.Repository
 {
-    public class GeneralRepository<C, E, K> : IRepository<E, K> 
+    public class GeneralRepository<C, E, K> : IRepository<E, K>
         where E : class
         where C : MyContext
     {

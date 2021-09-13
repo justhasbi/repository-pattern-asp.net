@@ -45,6 +45,8 @@ namespace NETCore.ViewModel
         [Required]
         public string GPA { get; set; }
 
+        public int RoleId { get; set; }
+
         [Required]
         public int UniversityId { get; set; }
     }

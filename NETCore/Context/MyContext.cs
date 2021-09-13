@@ -26,7 +26,6 @@ namespace NETCore.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             // one to one between person and account
             modelBuilder.Entity<Person>()
                 .HasOne(a => a.Account)
@@ -48,15 +47,26 @@ namespace NETCore.Context
                 .HasOne(u => u.University)
                 .WithMany(e => e.Educations);
 
-            // one to many between account with account role
-            modelBuilder.Entity<AccountRole>()
-                .HasOne(a => a.Account)
-                .WithMany(ar => ar.AccountRoles);
+            //// one to many between account with account role
+            //modelBuilder.Entity<AccountRole>()
+            //    .HasOne(a => a.Account)
+            //    .WithMany(ar => ar.AccountRoles);
 
-            // one to many between role with account role 
+            //// one to many between role with account role 
+            //modelBuilder.Entity<AccountRole>()
+            //    .HasOne(r => r.Role)
+            //    .WithMany(ar => ar.AccountRoles);
+
             modelBuilder.Entity<AccountRole>()
-                .HasOne(r => r.Role)
-                .WithMany(ar => ar.AccountRoles);
+                .HasKey(ar => new { ar.NIK, ar.RoleId });
+            modelBuilder.Entity<AccountRole>()
+                .HasOne(ar => ar.Account)
+                .WithMany(ar => ar.AccountRoles)
+                .HasForeignKey(ar => ar.NIK);
+            modelBuilder.Entity<AccountRole>()
+                .HasOne(ar => ar.Role)
+                .WithMany(ar => ar.AccountRoles)
+                .HasForeignKey(ar => ar.RoleId);
         }
     }
 }

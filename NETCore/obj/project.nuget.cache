@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "+++hQQMpOvSrmh6T9qERIo+OVeDWhefymIBx4/5MGXfojtHiyqFOMiZSZPLjBdNcyDKeHhBuygQebZKjjUPgSg==",
+  "dgSpecHash": "+6LFNUfUEJbATZbzcewOr6GJBAH2crD0sFb4H5Gk1e5tgOj8e8tGHabn2STlzDDazDOuU+vdILfAia4M54qA4w==",
   "success": true,
   "projectFilePath": "C:\\Users\\Hasbi Shuhada\\Documents\\GitHub\\repository-pattern-asp.net\\NETCore\\NETCore.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\Hasbi Shuhada\\.nuget\\packages\\castle.core\\4.4.1\\castle.core.4.4.1.nupkg.sha512",
     "C:\\Users\\Hasbi Shuhada\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\Hasbi Shuhada\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\Hasbi Shuhada\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.8\\microsoft.aspnetcore.authentication.jwtbearer.3.1.8.nupkg.sha512",
     "C:\\Users\\Hasbi Shuhada\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\Hasbi Shuhada\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.0.0\\microsoft.aspnetcore.jsonpatch.3.0.0.nupkg.sha512",
     "C:\\Users\\Hasbi Shuhada\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\3.0.0\\microsoft.aspnetcore.mvc.newtonsoftjson.3.0.0.nupkg.sha512",

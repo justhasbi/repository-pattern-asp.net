@@ -11,6 +11,7 @@ namespace NETCore.Models
     [Table("tb_m_role")]
     public class Role
     {
+        [Key]
         public int RoleId { get; set; }
 
         [Required]

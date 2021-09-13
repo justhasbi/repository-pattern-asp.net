@@ -309,4 +309,5 @@ C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\NETCore\bin\D
 C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\NETCore\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\NETCore\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\NETCore\obj\Debug\netcoreapp3.1\NETCore.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\NETCore\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\NETCore\obj\Debug\netcoreapp3.1\NETCore.csproj.AssemblyReference.cache

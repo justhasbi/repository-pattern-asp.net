@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using NETCore.Base;
 using NETCore.Models;
 using NETCore.Repository.Data;
@@ -19,6 +21,8 @@ namespace NETCore.Controllers
             this.repository = repository;
         }
 
+        // [Authorize(Roles = "Manager")]
+        [EnableCors("AllowOrigin")]
         [HttpGet("getperson")]
         public ActionResult GetPerson()
         {
@@ -37,6 +41,7 @@ namespace NETCore.Controllers
                 result = data
             });
         }
+
 
         [HttpGet("getperson/{NIK}")]
         public ActionResult GetPerson(string NIK)

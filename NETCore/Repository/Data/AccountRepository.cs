@@ -1,12 +1,18 @@
-﻿using NETCore.Context;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using NETCore.Context;
 using NETCore.Helper;
 using NETCore.Models;
 using NETCore.ViewModel;
 using NETCore.ViewModels;
 using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Security.Claims;
+using System.Text;
 
 namespace NETCore.Repository.Data
 {
@@ -14,9 +20,13 @@ namespace NETCore.Repository.Data
     {
 
         private readonly MyContext myContext;
-        public AccountRepository(MyContext myContext) : base(myContext)
+
+        public IConfiguration _configuration;
+
+        public AccountRepository(MyContext myContext, IConfiguration configuration) : base(myContext)
         {
             this.myContext = myContext;
+            _configuration = configuration;
         }
 
         public int Register(RegisterVM registerVM)
@@ -45,6 +55,14 @@ namespace NETCore.Repository.Data
             myContext.Accounts.Add(account);
             insert = myContext.SaveChanges();
 
+            var accountRole = new AccountRole()
+            {
+                NIK = registerVM.NIK,
+                RoleId = registerVM.RoleId
+            };
+            myContext.AccountRoles.Add(accountRole);
+            insert = myContext.SaveChanges();
+
             var education = new Education()
             {
                 Degree = registerVM.Degree,
@@ -64,32 +82,78 @@ namespace NETCore.Repository.Data
             return insert;
         }
 
-        public int Login(LoginVM loginVM)
+        public object Login(LoginVM loginVM)
         {
             var emailCheck = myContext.Persons.Where(x => x.Email.Equals(loginVM.Email)).FirstOrDefault();
-            
+
             if (emailCheck == null)
             {
-                return 0;
-            } 
+                return new
+                {
+                    message = "Email salah"
+                };
+            }
             else
             {
                 var passwordCheck = myContext.Accounts.Where(x => emailCheck.NIK.Equals(x.NIK)).FirstOrDefault();
-                
+
                 var validatePassword = Hashing.ValidatePassword(loginVM.Password, passwordCheck.Password);
-                if(emailCheck != null)
+                if (emailCheck != null)
                 {
                     if (validatePassword == false)
                     {
 
-                        return 1;
+                        return new
+                        {
+                            message = "password salah"
+                        };
                     }
                     else
                     {
-                        return 2;
+                        var getRole = (from p in myContext.Persons
+                                       join a in myContext.Accounts on p.NIK equals a.NIK
+                                       join ar in myContext.AccountRoles on a.NIK equals ar.NIK
+                                       join r in myContext.Roles on ar.RoleId equals r.RoleId
+                                       select new RoleVM
+                                       {
+                                           NIK = ar.NIK,
+                                           RoleId = ar.RoleId,
+                                           RoleName = r.Name
+                                       }).Where(x => x.NIK.Equals(emailCheck.NIK)).ToList();
+
+                        var claim = new List<Claim>
+                        {
+                            new Claim("NIK", passwordCheck.NIK),
+                            new Claim(ClaimTypes.Email, emailCheck.Email),
+                        };
+
+                        foreach (var item in getRole)
+                        {
+                            claim.Add(new Claim(ClaimTypes.Role, item.RoleName));
+                        }
+
+                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+                        var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                        var token = new JwtSecurityToken(
+                            _configuration["Jwt:Issuer"], 
+                            _configuration["Jwt:Audience"], 
+                            claim, 
+                            expires: DateTime.UtcNow.AddMinutes(10), 
+                            signingCredentials: signIn
+                        );
+                        var jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
+
+                        return new
+                        {
+                            message = "Login Sukses",
+                            token = jwtToken
+                        };
                     }
                 }
-                return 0;
+                return new
+                {
+                    message = "Email salah"
+                };
             }
         }
 
@@ -121,7 +185,7 @@ namespace NETCore.Repository.Data
         {
             MailMessage message = new MailMessage();
             SmtpClient smtpClient = new SmtpClient();
-            message.From = new MailAddress("**");
+            message.From = new MailAddress("justhasbi7699@gmail.com");
             message.To.Add(new MailAddress(destinationEmail));
             message.Subject = "Reset Password";
             message.IsBodyHtml = true;
@@ -130,7 +194,7 @@ namespace NETCore.Repository.Data
             smtpClient.Host = "smtp.gmail.com"; //for gmail host  
             smtpClient.EnableSsl = true;
             smtpClient.UseDefaultCredentials = false;
-            smtpClient.Credentials = new NetworkCredential("**", "**");
+            smtpClient.Credentials = new NetworkCredential("justhasbi7699@gmail.com", "tanpabatas123");
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtpClient.Send(message);
         }

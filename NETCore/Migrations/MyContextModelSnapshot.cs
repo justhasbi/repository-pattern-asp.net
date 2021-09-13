@@ -35,23 +35,16 @@ namespace NETCore.Migrations
 
             modelBuilder.Entity("NETCore.Models.AccountRole", b =>
                 {
-                    b.Property<int>("AccountRoleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AccountNIK")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("NIK")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.HasKey("AccountRoleId");
+                    b.Property<int>("AccountRoleId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("AccountNIK");
+                    b.HasKey("NIK", "RoleId");
 
                     b.HasIndex("RoleId");
 
@@ -180,7 +173,9 @@ namespace NETCore.Migrations
                 {
                     b.HasOne("NETCore.Models.Account", "Account")
                         .WithMany("AccountRoles")
-                        .HasForeignKey("AccountNIK");
+                        .HasForeignKey("NIK")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("NETCore.Models.Role", "Role")
                         .WithMany("AccountRoles")

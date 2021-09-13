@@ -1,0 +1,29 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+</head>
+<body>
+</body>
+</html>
+<script>
+    $.ajax({
+        url: "https://localhost:44300/api/persons/getperson/",
+        success: function (result) {
+            console.log(result);
+        }
+    })
+
+    @*fetch("https://localhost:44300/api/persons/getperson/")
+        .then(res => res.json())
+        .then(res => console.log(res))
+        .catch(err => console.log(err))*@
+</script>

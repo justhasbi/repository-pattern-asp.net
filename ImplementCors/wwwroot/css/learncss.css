@@ -1,0 +1,66 @@
+﻿* {
+    box-sizing:border-box;
+}
+
+.container, section, p, ul, li, a {
+    border: 1px solid #808080;
+    padding: 20px;
+    margin: 10px
+}
+
+.container {
+    width: 600px;
+    margin: auto;
+}
+
+a {
+    text-decoration: none;
+    display: block;
+}
+
+.b {
+    margin:20px
+}
+
+.a .p1::first-letter {
+    color:#0094ff;
+    font-size: 1.6em;
+    font-weight: bold;
+}
+
+/*.a a:visited {
+    background-color: #b200ff;
+}*/
+
+ul {
+    list-style:none;
+}
+a:active {
+    background-color: #ff6a00;
+    color: #fff;
+}
+
+.b ul li:nth-child(2):hover {
+    background-color: #808080;
+}
+
+.b ul li:nth-child(even){
+    background-color: #ff0000;
+}
+
+.b ul li:last-child {
+    background-color: #4cff00;
+}
+
+.b ul li:first-child {
+    background-color: #ff006e;
+}
+
+.b #a::before {
+    content: "🍕"
+}
+
+.b #a::after {
+    content: "🌭"
+}
+
