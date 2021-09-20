@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NETCore.Base;
 using NETCore.Context;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace NETCore.Controllers
 {
+    [EnableCors("AllowOrigin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountsController : BaseController<Account, AccountRepository, string>

@@ -9,6 +9,7 @@ using System.Net;
 
 namespace NETCore.Controllers
 {
+    [EnableCors("AllowOrigin")]
     [Route("api/[controller]")]
     [ApiController]
     public class PersonsController : BaseController<Person, PersonRepository, string>
@@ -21,8 +22,7 @@ namespace NETCore.Controllers
             this.repository = repository;
         }
 
-        // [Authorize(Roles = "Manager")]
-        [EnableCors("AllowOrigin")]
+        
         [HttpGet("getperson")]
         public ActionResult GetPerson()
         {
@@ -41,7 +41,6 @@ namespace NETCore.Controllers
                 result = data
             });
         }
-
 
         [HttpGet("getperson/{NIK}")]
         public ActionResult GetPerson(string NIK)

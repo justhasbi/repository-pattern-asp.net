@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NETCore.Base;
 using NETCore.Models;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace NETCore.Controllers
 {
+    [EnableCors("AllowOrigin")]
     [Route("api/[controller]")]
     [ApiController]
     public class EducationsController : BaseController<Education, EducationRepository, int>

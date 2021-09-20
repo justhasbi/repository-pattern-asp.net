@@ -58,7 +58,7 @@ namespace NETCore.Repository.Data
             var accountRole = new AccountRole()
             {
                 NIK = registerVM.NIK,
-                RoleId = registerVM.RoleId
+                RoleId = registerVM.RoleId // 1
             };
             myContext.AccountRoles.Add(accountRole);
             insert = myContext.SaveChanges();

@@ -59,9 +59,15 @@ namespace NETCore
                 };
             });
 
-            services.AddCors(c =>
+            services.AddCors(options =>
             {
-                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+                options.AddPolicy("AllowOrigin", 
+                    builder => 
+                    {
+                        builder.AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                });
             });
         }
 
@@ -73,19 +79,17 @@ namespace NETCore
                 app.UseDeveloperExceptionPage();
             }
 
-
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
-
             app.UseHttpsRedirection();
-
             app.UseRouting();
             
-            app.UseCors(options => options.AllowAnyOrigin());
+            // app.UseCors(options => options.AllowAnyOrigin());
+            app.UseCors("AllowOrigin");
 
             app.UseAuthentication();
 

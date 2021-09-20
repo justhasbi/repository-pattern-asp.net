@@ -106,7 +106,7 @@ namespace NETCore.Base
                 return StatusCode((int)HttpStatusCode.OK, new
                 {
                     status = HttpStatusCode.OK,
-                    message = "Sukses Update Data"
+                    message = "Sukses Delete Data"
                 }); ;
             }
             catch (Exception)

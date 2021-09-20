@@ -81,7 +81,6 @@ C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\ImplementCors
 C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\ImplementCors\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\ImplementCors\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\ImplementCors\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\ImplementCors\obj\Debug\netcoreapp3.1\ImplementCors.csproj.AssemblyReference.cache
 C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\ImplementCors\obj\Debug\netcoreapp3.1\ImplementCors.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\ImplementCors\obj\Debug\netcoreapp3.1\ImplementCors.AssemblyInfoInputs.cache
 C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\ImplementCors\obj\Debug\netcoreapp3.1\ImplementCors.AssemblyInfo.cs
@@ -111,3 +110,6 @@ C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\ImplementCors
 C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\ImplementCors\obj\Debug\netcoreapp3.1\ImplementCors.genruntimeconfig.cache
 C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\ImplementCors\obj\Debug\netcoreapp3.1\Razor\Views\TestCors\Index.cshtml.g.cs
 C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\ImplementCors\obj\Debug\netcoreapp3.1\Razor\Views\LearnCSS\Index.cshtml.g.cs
+C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\ImplementCors\obj\Debug\netcoreapp3.1\Razor\Views\Pokemon\Index.cshtml.g.cs
+C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\ImplementCors\obj\Debug\netcoreapp3.1\ImplementCors.csproj.AssemblyReference.cache
+C:\Users\Hasbi Shuhada\Documents\GitHub\repository-pattern-asp.net\ImplementCors\obj\Debug\netcoreapp3.1\Razor\Views\ClientApi\Index.cshtml.g.cs

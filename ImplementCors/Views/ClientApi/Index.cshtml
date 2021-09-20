@@ -1,0 +1,173 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Fetch Api";
+}
+
+<!-- Card -->
+<div class="card shadow">
+    <div class="card-header">
+        <div class="row">
+            <p class="h1 col-8 text-primary">Data Person</p>
+            <div class="col-4">
+                <button data-toggle="modal"
+                        data-target="#registerModal"
+                        class="btn btn-primary float-right">
+                    Register
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Table -->
+    <div class="card-body">
+        <table class="table table-striped table-bordered table-hover table-responsive-md table-responsive-sm table-responsive-lg" id="dataTable">
+            <thead>
+                <tr>
+                    <td>No</td>
+                    <td>NIK</td>
+                    <td>Name</td>
+                    <td>Email</td>
+                    <td>Gender</td>
+                    <td>phone</td>
+                    <td>University</td>
+                    <td>Action</td>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Register Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerModal">Register User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="needs-validation register-form" novalidate>
+                    <div class="form-group">
+                        <label for="nik">NIK</label>
+                        <input type="text" class="form-control" id="nik" placeholder="NIK" required>
+                        <div class="invalid-feedback">Field Cannot be Empty</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="text" class="form-control" id="phone" placeholder="Phone Number" required>
+                        <div class="invalid-feedback">Field Cannot be Empty</div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                                <label for="first">First Name</label>
+                                <input type="text" class="form-control" id="first" placeholder="First Name" required>
+                                <div class="invalid-feedback">Field Cannot be Empty</div>
+                            </div>
+                            <div class="col">
+                                <label for="last">Last Name</label>
+                                <input type="text" class="form-control" id="last" placeholder="Last Name" required>
+                                <div class="invalid-feedback">Field Cannot be Empty</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="birthdate">Birth Date</label>
+                        <input type="date" class="form-control" id="birthdate" required>
+                        <div class="invalid-feedback">Field Cannot be Empty</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select class="form-control" id="gender" required>
+                            <option value="0">Male</option>
+                            <option value="1">Female</option>
+                        </select>
+                        <div class="invalid-feedback">Field Cannot be Empty</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="salary">Salary</label>
+                        <input type="number" class="form-control" id="salary" placeholder="Salary" required>
+                        <div class="invalid-feedback">Field Cannot be Empty</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" required>
+                        <div class="invalid-feedback">Field Cannot be Empty</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pass">Password</label>
+                        <input type="text" class="form-control" id="pass" placeholder="Password" required>
+                        <div class="invalid-feedback">Field Cannot be Empty</div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                                <label for="degree">Degree</label>
+                                <input type="text" class="form-control" id="degree" placeholder="Degree" required>
+                                <div class="invalid-feedback">Field Cannot be Empty</div>
+                            </div>
+                            <div class="col">
+                                <label for="gpa">GPA</label>
+                                <input type="text" class="form-control" id="gpa" placeholder="GPA" required>
+                                <div class="invalid-feedback">Field Cannot be Empty</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="number" class="form-control" id="role" value="1" disabled readonly hidden />
+
+                    <div class="form-group">
+                        <label for="university">University</label>
+                        <select class="form-control" id="university" required>
+                            <option value="">university</option>
+                        </select>
+                        <div class="invalid-feedback">Field Cannot be Empty</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="btnSubmit">Submit</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Person detail Modal -->
+<div class="modal fade" id="personDetail" tabindex="-1" role="dialog" aria-labelledby="personDetail" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="personDetail"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/clientApi.js"></script>
+}

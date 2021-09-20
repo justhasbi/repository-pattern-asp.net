@@ -2,11 +2,7 @@
     $.ajax({
         url: 'https://swapi.dev/api/people',
     }).done(result => {
-
-        console.log(result.results);
         let items = "";
-
-
         $.each(result.results, (key, val) => {
             items += `<tr class="item${key + 1}">
                     <td>${key + 1}</td>
@@ -32,7 +28,6 @@ const detailItem = (url) => {
     $.ajax({
         url: url
     }).done(result => {
-        console.log(result);
         let detailText = `<ul>
                             <li>Name: ${result.name}</li>
                             <li>Gender: ${result.gender}</li>

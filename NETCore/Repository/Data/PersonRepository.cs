@@ -33,7 +33,7 @@ namespace NETCore.Repository.Data
                                     FullName = $"{p.FirstName} {p.LastName}",
                                     Phone = p.Phone,
                                     BirthDate = p.BirthDate,
-                                    Gender = (int)p.gender == 0 ? "laki-laki" : "perempuan",
+                                    Gender = (int)p.gender == 0 ? "Male" : "Female",
                                     Salary = p.Salary,
                                     Email = p.Email,
                                     Degree = e.Degree,
