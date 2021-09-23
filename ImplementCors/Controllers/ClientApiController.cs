@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ImplementCors.Base;
+using ImplementCors.Repositories.Data;
+using Microsoft.AspNetCore.Mvc;
+using NETCore.Models;
+using NETCore.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;

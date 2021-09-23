@@ -51,39 +51,42 @@ namespace NETCore.Base
             var data = repository.GetAll();
             if (data == null)
             {
-                return StatusCode((int)HttpStatusCode.NoContent, new
-                {
-                    status = HttpStatusCode.NoContent,
-                    result = data
-                });
+                //return StatusCode((int)HttpStatusCode.NoContent, new
+                //{
+                //    status = HttpStatusCode.NoContent,
+                //    result = data
+                //});
+                return NotFound(data);
             }
-            return StatusCode((int)HttpStatusCode.OK, new
-            {
-                status = HttpStatusCode.OK,
-                result = data
-            });
+            return Ok(data);
+            //return StatusCode((int)HttpStatusCode.OK, new
+            //{
+            //    status = HttpStatusCode.OK,
+            //    result = data
+            //});
         }
 
         [HttpGet("{key}")]
         public ActionResult Get(K key)
         {
-
             var data = repository.GetById(key);
             if (data == null)
             {
-                return StatusCode((int)HttpStatusCode.NotFound, new
-                {
-                    status = HttpStatusCode.NotFound,
-                    result = data,
-                    message = "Data tidak ditemukan!"
-                });
+                //return StatusCode((int)HttpStatusCode.NotFound, new
+                //{
+                //    status = HttpStatusCode.NotFound,
+                //    result = data,
+                //    message = "Data tidak ditemukan!"
+                //});
+                return NotFound(data);
             }
-            return StatusCode((int)HttpStatusCode.OK, new
-            {
-                status = HttpStatusCode.OK,
-                result = data,
-                message = "Data ditemukan!"
-            });
+            return Ok(data);
+            //return StatusCode((int)HttpStatusCode.OK, new
+            //{
+            //    status = HttpStatusCode.OK,
+            //    result = data,
+            //    message = "Data ditemukan!"
+            //});
         }
 
         [HttpPut]

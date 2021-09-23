@@ -6,7 +6,7 @@ using NETCore.Repository.Data;
 
 namespace NETCore.Controllers
 {
-    [EnableCors("AllowOrigin")]
+    //[EnableCors("AllowOrigin")]
     [Route("api/[controller]")]
     [ApiController]
     public class ProfilingsController : BaseController<Profiling, ProfilingRepository, string>

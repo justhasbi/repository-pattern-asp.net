@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace NETCore.Controllers
 {
-    [EnableCors("AllowOrigin")]
+    //[EnableCors("AllowOrigin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountsController : BaseController<Account, AccountRepository, string>
@@ -40,40 +40,42 @@ namespace NETCore.Controllers
             if(checkEmail == null && checkNIK == null && checkPhone == null)
             {
                 var registerResponse = repository.Register(registerVM);
-                return StatusCode((int)HttpStatusCode.Created, new
+                return Ok(new
                 {
-                    status = HttpStatusCode.Created,
-                    result = registerVM,
+                    status = HttpStatusCode.OK,
+                    data = registerVM,
                     message = "Data Sukses Ditambahkan"
                 });
+
             } 
             else if (checkNIK != null)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new
+                return BadRequest(new
                 {
-                    status = HttpStatusCode.InternalServerError,
+                    status = HttpStatusCode.BadRequest,
                     message = "NIK Sudah Digunakan"
                 });
             }
             else if (checkEmail != null)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new
+
+                return BadRequest(new
                 {
-                    status = HttpStatusCode.InternalServerError,
+                    status = HttpStatusCode.BadRequest,
                     message = "Email Sudah Digunakan"
                 });
             }
             else if (checkPhone != null)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, new
+                return BadRequest(new
                 {
-                    status = HttpStatusCode.InternalServerError,
+                    status = HttpStatusCode.BadRequest,
                     message = "Nomor Telepon Sudah Digunakan"
                 });
             }
-            return StatusCode((int)HttpStatusCode.InternalServerError, new
+            return BadRequest(new
             {
-                status = HttpStatusCode.InternalServerError,
+                status = HttpStatusCode.BadRequest,
                 message = "Data Gagal Dimasukan"
             });
 
@@ -83,38 +85,8 @@ namespace NETCore.Controllers
         public ActionResult Login(LoginVM loginVM)
         {
             var loginAction = repository.Login(loginVM);
-
-
-            //if (loginAction == 0)
-            //{
-            //    return StatusCode((int)HttpStatusCode.BadRequest, new
-            //    {
-            //        status = HttpStatusCode.BadRequest,
-            //        message = "Email Salah"
-            //    });
-            //}
-            //else if (loginAction == 1)
-            //{
-            //    return StatusCode((int)HttpStatusCode.BadRequest, new
-            //    {
-            //        status = HttpStatusCode.BadRequest,
-            //        message = "Password salah"
-            //    });
-            //}
-            //else
-            //{
-            //    return StatusCode((int)HttpStatusCode.Created, new
-            //    {
-            //        status = HttpStatusCode.OK,
-            //        message = "Login Sukses"
-            //    });
-            //}
-
-            return StatusCode((int)HttpStatusCode.Created, new
-            {
-                status = HttpStatusCode.OK,
-                result = loginAction
-            });
+            
+            return Ok(loginAction);
         }
 
         [HttpPut("forgotPassword")]

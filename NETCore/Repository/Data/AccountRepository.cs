@@ -82,15 +82,16 @@ namespace NETCore.Repository.Data
             return insert;
         }
 
-        public object Login(LoginVM loginVM)
+        public JwtTokenVm Login(LoginVM loginVM)
         {
             var emailCheck = myContext.Persons.Where(x => x.Email.Equals(loginVM.Email)).FirstOrDefault();
 
             if (emailCheck == null)
             {
-                return new
+                return new JwtTokenVm
                 {
-                    message = "Email salah"
+                    Messages = "Email Salah!",
+                    Token = null
                 };
             }
             else
@@ -103,9 +104,10 @@ namespace NETCore.Repository.Data
                     if (validatePassword == false)
                     {
 
-                        return new
+                        return new JwtTokenVm
                         {
-                            message = "password salah"
+                            Messages = "Password Salah!",
+                            Token = null
                         };
                     }
                     else
@@ -143,16 +145,18 @@ namespace NETCore.Repository.Data
                         );
                         var jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
 
-                        return new
+                        return new JwtTokenVm
                         {
-                            message = "Login Sukses",
-                            token = jwtToken
+                            Messages = "Login Sukses!",
+                            Token = jwtToken
                         };
+
                     }
                 }
-                return new
+                return new JwtTokenVm
                 {
-                    message = "Email salah"
+                    Messages = "Email Salah!",
+                    Token = null
                 };
             }
         }

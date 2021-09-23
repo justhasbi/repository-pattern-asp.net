@@ -9,7 +9,7 @@ using System.Net;
 
 namespace NETCore.Controllers
 {
-    [EnableCors("AllowOrigin")]
+    //[EnableCors("AllowOrigin")]
     [Route("api/[controller]")]
     [ApiController]
     public class PersonsController : BaseController<Person, PersonRepository, string>
@@ -29,17 +29,19 @@ namespace NETCore.Controllers
             var data = repository.GetPersonVMs();
             if (data == null)
             {
-                return StatusCode((int)HttpStatusCode.NoContent, new
-                {
-                    status = HttpStatusCode.NoContent,
-                    result = data
-                });
+                return NotFound(data);
+                //return StatusCode((int)HttpStatusCode.NoContent, new
+                //{
+                //    status = HttpStatusCode.NoContent,
+                //    result = data
+                //});
             }
-            return StatusCode((int)HttpStatusCode.OK, new
-            {
-                status = HttpStatusCode.OK,
-                result = data
-            });
+            return Ok(data);
+            //return StatusCode((int)HttpStatusCode.OK, new
+            //{
+            //    status = HttpStatusCode.OK,
+            //    result = data
+            //});
         }
 
         [HttpGet("getperson/{NIK}")]
@@ -48,17 +50,21 @@ namespace NETCore.Controllers
             var data = repository.GetPersonVMById(NIK);
             if (data == null)
             {
-                return StatusCode((int)HttpStatusCode.NoContent, new
-                {
-                    status = HttpStatusCode.NoContent,
-                    result = data
-                });
+                //return StatusCode((int)HttpStatusCode.NoContent, new
+                //{
+                //    status = HttpStatusCode.NoContent,
+                //    result = data
+                //});
+                return NotFound(data);
+
             }
-            return StatusCode((int)HttpStatusCode.OK, new
-            {
-                status = HttpStatusCode.OK,
-                result = data
-            });
+            return Ok(data);
+
+            //return StatusCode((int)HttpStatusCode.OK, new
+            //{
+            //    status = HttpStatusCode.OK,
+            //    result = data
+            //});
         }
     }
 }

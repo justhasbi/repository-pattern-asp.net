@@ -1,4 +1,5 @@
 ﻿using ImplementCors.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,7 +21,11 @@ namespace ImplementCors.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            return RedirectToAction("index", "Accounts");
         }
 
         public IActionResult Privacy()

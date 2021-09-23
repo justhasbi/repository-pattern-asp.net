@@ -3,9 +3,9 @@
 let dataTable = $('#dataTable').DataTable({
     "filter": true,
     "ajax": {
-        "url": "https://localhost:44300/api/persons/getperson",
+        "url": "person/getallpersons",
         "datatype": "json",
-        "dataSrc": "result"
+        "dataSrc": ""
     },
     "dom": 'Bfrtip',
     "buttons": [
@@ -99,7 +99,7 @@ let dataTable = $('#dataTable').DataTable({
 // person detail
 const person = (nik) => {
     $.ajax({
-        url: `https://localhost:44300/api/persons/getperson/${nik}`,
+        url: `person/GetSinglePerson/${nik}`,
         method: 'GET'
     }).done(res => {
         console.log(res)
@@ -108,31 +108,31 @@ const person = (nik) => {
             <table class="table table-bordered">
                 <tbody>
                     <tr>
-                        <td><b>NIK :</b> ${res.result.nik}</td>
+                        <td><b>NIK :</b> ${res.nik}</td>
                     </tr>
                     <tr>
-                        <td><b>NIK :</b> ${res.result.fullName}</td>
+                        <td><b>NIK :</b> ${res.fullName}</td>
                     </tr>
                     <tr>
-                        <td><b>NIK :</b> ${res.result.gender}</td>
+                        <td><b>NIK :</b> ${res.gender}</td>
                     </tr>
                     <tr>
-                        <td><b>Birth Date :</b> ${res.result.birthDate}</td>
+                        <td><b>Birth Date :</b> ${res.birthDate}</td>
                     </tr>
                     <tr>
-                        <td><b>Phone Number :</b> ${res.result.phone.startsWith('0') ? '+62' + res.result.phone.substr(1) : '+62' + res.result.phone}</td>
+                        <td><b>Phone Number :</b> ${res.phone.startsWith('0') ? '+62' + res.phone.substr(1) : '+62' + res.phone}</td>
                     </tr>
                     <tr>
-                        <td><b>University :</b> ${res.result.universityName}</td>
+                        <td><b>University :</b> ${res.universityName}</td>
                     </tr>
                     <tr>
-                        <td><b>Degree :</b> ${res.result.degree}</td>
+                        <td><b>Degree :</b> ${res.degree}</td>
                     </tr>
                     <tr>
-                        <td><b>GPA :</b> ${res.result.gpa}</td>
+                        <td><b>GPA :</b> ${res.gpa}</td>
                     </tr>
                     <tr>
-                        <td><b>Salary :</b> Rp. ${res.result.salary}</td>
+                        <td><b>Salary :</b> Rp. ${res.salary}</td>
                     </tr>
                 </tbody>
             </table>`
@@ -224,23 +224,24 @@ Array.prototype.slice.call(forms).forEach((form) => {
             "GPA": gpa,
             "RoleId": parseInt(role)
         };
-
+        console.log(data)
         $.ajax({
-            url: 'https://localhost:44300/api/accounts/register',
-            method: 'post',
+            url: '/accounts/register/',
+            method: 'POST',
             dataType: 'json',
-            contentType: 'application/json',
+            //contentType: 'application/json',
+            contentType: 'application/x-www-form-urlencoded',
             data: JSON.stringify(data),
             success: function (data) {
                 $('#registerModal').modal('hide')
                 form.reset();
                 form.classList.add('needs-validation');
                 swal({
-                    title: data.message,
+                    title: "Success Insert Data",
                     icon: "success",
                 }).then(res => dataTable.ajax.reload())
             },
-        });
+        }).done(res => console.log(res)).fail(res => console.log(res));
     });
 })
 
@@ -251,7 +252,7 @@ $.ajax({
 }).done(res => {
     let selectItem = '';
 
-    $.each(res.result, (key, val) => {
+    $.each(res, (key, val) => {
         selectItem += `<option value="${val.universityId}">${val.name}</option>`
     });
     $('#university').html(selectItem);

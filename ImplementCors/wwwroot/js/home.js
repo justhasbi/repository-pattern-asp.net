@@ -1,5 +1,4 @@
 ﻿
-
 let pieOptions = {
     chart: {
         type: 'pie',
@@ -123,14 +122,14 @@ donutChart.render();
 barChart.render();
 barChartDegree.render();
 
-let url = 'https://localhost:44300/api/persons/getperson'
+let url = 'person/getallpersons'
 
 $.getJSON(url, (res) => {
     console.log(res)
 
     // pie chart data
-    const male = res.result.filter(item => item.gender === "Male").length;
-    const female = res.result.filter(item => item.gender === "Female").length;
+    const male = res.filter(item => item.gender === "Male").length;
+    const female = res.filter(item => item.gender === "Female").length;
     
     pieChart.updateOptions({
         series: [male, female],
@@ -139,14 +138,14 @@ $.getJSON(url, (res) => {
 
     // donut chart
     const univName = []
-    const university = res.result.filter((v, i, a) => a.findIndex(t => (t.universityName === v.universityName)) === i)
+    const university = res.filter((v, i, a) => a.findIndex(t => (t.universityName === v.universityName)) === i)
     university.map(item => {
         univName.push(item.universityName)
     })
 
     const numUniv = []
     univName.forEach(i => {
-        numUniv.push(res.result.filter(item => item.universityName === i).length)
+        numUniv.push(res.filter(item => item.universityName === i).length)
     })
 
     donutChart.updateOptions({
@@ -156,7 +155,7 @@ $.getJSON(url, (res) => {
 
     // bar chart
     const degreeName = []
-    const degree = res.result.filter((v, i, a) => a.findIndex(t => (t.degree === v.degree)) === i)
+    const degree = res.filter((v, i, a) => a.findIndex(t => (t.degree === v.degree)) === i)
     degree.map(item => {
         degreeName.push(item.degree)
     })
@@ -164,8 +163,8 @@ $.getJSON(url, (res) => {
     const gpaAverage = []
     const degreeAmount = []
     degreeName.forEach(i => {
-        const result = res.result.filter(item => item.degree === i)
-        const dataAmount = res.result.filter(item => item.degree === i).length
+        const result = res.filter(item => item.degree === i)
+        const dataAmount = res.filter(item => item.degree === i).length
         degreeAmount.push(dataAmount)
         gpaAverage.push((result.reduce((total, next) => total + parseFloat(next.gpa), 0) / result.length).toFixed(3))
     })
