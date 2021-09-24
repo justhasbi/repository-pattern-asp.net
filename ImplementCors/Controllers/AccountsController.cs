@@ -44,12 +44,12 @@ namespace ImplementCors.Controllers
             return RedirectToAction("index", "Home");
         }
 
-        //[HttpPost("Register/")]
-        //public async Task<JsonResult> Register(RegisterVM registerVM)
-        //{
-        //    var result = await accountRepository.Register(registerVM);
-        //    return Json(result);
-        //}
+        [HttpPost]
+        public JsonResult RegisterData(RegisterClientVM registerClientVM)
+        {
+            var result = accountRepository.RegisterPerson(registerClientVM);
+            return Json(result);
+        }
 
         [Authorize]
         [HttpGet("Logout/")]

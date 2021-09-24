@@ -2,6 +2,7 @@
 
 using ImplementCors.Base;
 using ImplementCors.Repositories.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NETCore.Models;
 using NETCore.ViewModel;
@@ -12,25 +13,27 @@ namespace ImplementCors.Controllers
     public class PersonController : BaseController<Person, PersonRepository, string>
     {
         private readonly PersonRepository personRepository;
-        private readonly AccountRepository accountRepository;
-
-        public PersonController(PersonRepository personRepository, AccountRepository accountRepository) : base(personRepository)
+        
+        public PersonController(PersonRepository personRepository) : base(personRepository)
         {
             this.personRepository = personRepository;
-            this.accountRepository = accountRepository;
         }
 
         public IActionResult Index()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            return RedirectToAction("index", "Accounts");
         }
 
-        [HttpPost]
-        public JsonResult Register([FromBody]RegisterVM registerVM)
-        {
-            var result = accountRepository.Register(registerVM);
-            return Json(result);
-        }
+        //[HttpPost("Register/")]
+        //public JsonResult Register(RegisterVM registerVM)
+        //{
+        //    var result = accountRepository.Register(registerVM);
+        //    return Json(result);
+        //}
 
         [HttpGet]
         public async Task<JsonResult> GetAllPersons()

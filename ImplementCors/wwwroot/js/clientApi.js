@@ -111,10 +111,10 @@ const person = (nik) => {
                         <td><b>NIK :</b> ${res.nik}</td>
                     </tr>
                     <tr>
-                        <td><b>NIK :</b> ${res.fullName}</td>
+                        <td><b>Full Name :</b> ${res.fullName}</td>
                     </tr>
                     <tr>
-                        <td><b>NIK :</b> ${res.gender}</td>
+                        <td><b>Gender :</b> ${res.gender}</td>
                     </tr>
                     <tr>
                         <td><b>Birth Date :</b> ${res.birthDate}</td>
@@ -138,7 +138,7 @@ const person = (nik) => {
             </table>`
 
         $('#personDetail .modal-body').html(personData);
-        $('h5.modal-title').html(`${res.result.fullName}`.toUpperCase());
+        $('h5.modal-title').html(`${res.fullName}`.toUpperCase());
     });
 };
 
@@ -195,43 +195,30 @@ Array.prototype.slice.call(forms).forEach((form) => {
 
         e.preventDefault();
 
-        const nik = $('#nik').val();
-        const phone = $('#phone').val();
-        const firstName = $('#first').val();
-        const lastName = $('#last').val();
-        const birthDate = $('#birthdate').val();
-        const gender = $('#gender').val();
-        const salary = $('#salary').val();
-        const email = $('#email').val();
-        const password = $('#pass').val();
-        const degree = $('#degree').val();
-        const gpa = $('#gpa').val();
-        const role = $('#role').val();
-        const university = $('#university').val();
+        let data = new Object();
 
-        const data = {
-            "NIK": nik,
-            "FirstName": firstName,
-            "LastName": lastName,
-            "Phone": phone,
-            "BirthDate": birthDate,
-            "Salary": salary,
-            "Email": email,
-            "Gender": parseInt(gender),
-            "Password": password,
-            "universityId": parseInt(university),
-            "Degree": degree,
-            "GPA": gpa,
-            "RoleId": parseInt(role)
-        };
-        console.log(data)
+        data.NIK = $('#nik').val();
+        data.Phone = $('#phone').val();
+        data.FirstName = $('#first').val();
+        data.LastName = $('#last').val();
+        data.BirthDate = $('#birthdate').val();
+        data.Gender = parseInt($('#gender').val());
+        data.Salary = $('#salary').val();
+        data.Email = $('#email').val();
+        data.Password = $('#pass').val();
+        data.Degree = $('#degree').val();
+        data.GPA = $('#gpa').val();
+        data.RoleId = parseInt($('#role').val());
+        data.UniversityId = parseInt($('#university').val());
+
+        console.log(JSON.stringify(data))
         $.ajax({
-            url: '/accounts/register/',
-            method: 'POST',
+            url: 'https://localhost:44350/accounts/registerdata/',
+            type: 'post',
             dataType: 'json',
-            //contentType: 'application/json',
-            contentType: 'application/x-www-form-urlencoded',
-            data: JSON.stringify(data),
+            //contentType: 'application/json; charset=utf-8',
+            contentType: 'application/x-www-form-urlencoded; charset=utf-8',
+            data: data,
             success: function (data) {
                 $('#registerModal').modal('hide')
                 form.reset();
@@ -241,7 +228,13 @@ Array.prototype.slice.call(forms).forEach((form) => {
                     icon: "success",
                 }).then(res => dataTable.ajax.reload())
             },
-        }).done(res => console.log(res)).fail(res => console.log(res));
+            error: function () {
+                swal({
+                    title: "Error Insert Data",
+                    icon: "error",
+                }).then(res => dataTable.ajax.reload())
+        }
+        });
     });
 })
 
@@ -265,19 +258,17 @@ const deletePerson = (nik) => {
         icon: 'warning',
         buttons: ['Cancel', 'Yes!']
     }).then(result => {
-        console.log(result)
         if (result) {
             $.ajax({
-                url: 'https://localhost:44300/api/Persons/' + nik,
+                url: 'person/delete/' + nik,
                 method: 'DELETE',
                 success: function (data) {
                     swal({
-                        title: data.message,
+                        title: "Success Delete Data",
                         icon: "success",
                     }).then(res => dataTable.ajax.reload())
                 },
             });
         }
     })
-    
 }

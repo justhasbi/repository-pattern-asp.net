@@ -47,10 +47,17 @@ namespace ImplementCors.Repositories.Data
             return token;
         }
 
-        public string Register(RegisterVM registerVM)
+        //public string Register(RegisterVM registerVM)
+        //{
+        //    StringContent content = new StringContent(JsonConvert.SerializeObject(registerVM), Encoding.UTF8, "application/json");
+        //    var response = httpClient.PostAsync(request + "register", content).Result.Content.ReadAsStringAsync().Result;
+        //    return response;
+        //}
+
+        public string RegisterPerson(RegisterClientVM registerClientVM)
         {
-            StringContent content = new StringContent(JsonConvert.SerializeObject(registerVM), Encoding.UTF8, "application/json");
-            var response = httpClient.PostAsync(request + "register", content).Result.Content.ReadAsStringAsync().Result;
+            StringContent content = new StringContent(JsonConvert.SerializeObject(registerClientVM), Encoding.UTF8, "application/json");
+            var response = httpClient.PostAsync(request + "Register", content).Result.Content.ReadAsStringAsync().Result;
             return response;
         }
     }

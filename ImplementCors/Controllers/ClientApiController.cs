@@ -1,5 +1,6 @@
 ﻿using ImplementCors.Base;
 using ImplementCors.Repositories.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NETCore.Models;
 using NETCore.ViewModel;
@@ -12,9 +13,14 @@ namespace ImplementCors.Controllers
 {
     public class ClientApiController : Controller
     {
+        
         public IActionResult Index()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            return RedirectToAction("index", "Accounts");
         }
     }
 }

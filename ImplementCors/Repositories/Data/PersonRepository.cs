@@ -55,6 +55,5 @@ namespace ImplementCors.Repositories.Data
             }
             return entity;
         }
-
     }
 }

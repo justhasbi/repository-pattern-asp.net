@@ -1,13 +1,12 @@
-﻿using NETCore.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace NETCore.ViewModel
+namespace NETCore.ViewModels
 {
-    public class RegisterVM
+    public class RegisterClientVM
     {
         public string NIK { get; set; }
 

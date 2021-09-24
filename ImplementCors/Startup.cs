@@ -26,7 +26,8 @@ namespace ImplementCors
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSession();
-
+            services.AddHttpContextAccessor();
+            services.AddMvc();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false;
@@ -41,7 +42,6 @@ namespace ImplementCors
                 };
             });
 
-            services.AddHttpContextAccessor();
             services.AddControllersWithViews();
             services.AddScoped<PersonRepository>();
             services.AddScoped<AccountRepository>();
