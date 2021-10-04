@@ -78,7 +78,6 @@ namespace NETCore.Controllers
                 status = HttpStatusCode.BadRequest,
                 message = "Data Gagal Dimasukan"
             });
-
         }
 
         [HttpPost("login")]

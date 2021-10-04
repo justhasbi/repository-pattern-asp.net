@@ -1,9 +1,9 @@
 /startbootstrap-sb-admin-2-gh-pages
 /.vs
-ImplementCors/bin
-ImplementCors/obj
-ImplementCors/wwwroot/template
+/ImplementCors/bin
+/ImplementCors/obj
+/ImplementCors/wwwroot/template
 
-NETCore/bin
-NETCore/obj
-NETCore/Migrations
+/NETCore/bin
+/NETCore/obj
+/NETCore/Migrations
